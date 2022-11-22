@@ -21,16 +21,20 @@ fig9 = True
 figa1b = True
 
 if fig1:
+
+    # Load data with swarms of different sizes using k=10
     data1 = pd.read_csv("data/1T_k10_50agents_v15_score.csv", header=None)
     data2 = pd.read_csv("data/1T_k10_40agents_v15_score.csv", header=None)
     data3 = pd.read_csv("data/1T_k10_30agents_v15_score.csv", header=None)
     data4 = pd.read_csv("data/1T_k10_20agents_v15_score.csv", header=None)
 
+    # Load data with swarms of different sizes using k=15
     data1a = pd.read_csv("data/1T_k15_50agents_v15_score.csv", header=None)
     data2a = pd.read_csv("data/1T_k15_40agents_v15_score.csv", header=None)
     data3a = pd.read_csv("data/1T_k15_30agents_v15_score.csv", header=None)
     data4a = pd.read_csv("data/1T_k15_20agents_v15_score.csv", header=None)
 
+    # Load data with swarms of different sizes using k=25
     data1b = pd.read_csv("data/1T_k25_50agents_v15_score.csv", header=None)
     data2b = pd.read_csv("data/1T_k25_40agents_v15_score.csv", header=None)
     data3b = pd.read_csv("data/1T_k25_30agents_v15_score.csv", header=None)
@@ -38,14 +42,16 @@ if fig1:
     plt.rcParams.update({'font.size': 20, 'lines.linewidth': 3})
     fig, axs = plt.subplots(1, 3, figsize=(15, 6))
 
+    # Generate list of densities for a given number of agents and different area sizes
     areas = np.logspace(0.6, 2.65, num=125) ** 2
-    rhos1 = 50 / areas
-    rhos2 = 40 / areas
-    rhos3 = 30 / areas
-    rhos4 = 20 / areas
+    rhos1 = 50 / areas  # 50 Agents density
+    rhos2 = 40 / areas  # 40 Agents density
+    rhos3 = 30 / areas  # 30 Agents density
+    rhos4 = 20 / areas  # 20 Agents density
 
     plt.subplots_adjust(left=0.05, bottom=0.11, right=0.97, top=0.95)
 
+    # Plot k=10 phases
     axs[0].plot(rhos1, data1, color='tab:red', label='$N=50$')
     axs[0].plot(rhos2, data2, color='tab:blue', label='$N=40$')
     axs[0].plot(rhos3, data3, color='tab:green', label='$N=30$')
@@ -66,6 +72,7 @@ if fig1:
     axs[0].axvspan(0, 0.002, hatch='//', facecolor='white', edgecolor='grey', linewidth=2)
     axs[0].axvspan(0.1, 4, hatch='\\\\', facecolor='white', edgecolor='grey', linewidth=2)
 
+    # Plot k=15 phases
     axs[1].plot(rhos1, data1a, color='tab:red', label='$N=50$')
     axs[1].plot(rhos2, data2a, color='tab:blue', label='$N=40$')
     axs[1].plot(rhos3, data3a, color='tab:green', label='$N=30$')
@@ -84,6 +91,7 @@ if fig1:
     axs[1].axvspan(0, 0.002, hatch='//', facecolor='white', edgecolor='grey', linewidth=2)
     axs[1].axvspan(0.2, 4, hatch='\\\\', facecolor='white', edgecolor='grey', linewidth=2)
 
+    # Plot k=25 phases
     axs[2].plot(rhos1, data1b, color='tab:red', label='$N=50$')
     axs[2].plot(rhos2, data2b, color='tab:blue', label='$N=40$')
     axs[2].plot(rhos3, data3b, color='tab:green', label='$N=30$')
@@ -104,16 +112,20 @@ if fig1:
     plt.show()
 
 if fig2:
+
+    # Load local density data
     data1 = pd.read_csv("data/50agents_ne_k5_v15_density.csv", header=None)
     data2 = pd.read_csv("data/50agents_ne_k15_v15_density.csv", header=None)
     data3 = pd.read_csv("data/50agents_ne_k20_v15_density.csv", header=None)
     data4 = pd.read_csv("data/50agents_ne_k35_v15_density.csv", header=None)
 
+    # Load tracking performance data
     data1b = pd.read_csv("data/50agents_ne_k5_v15_score.csv", header=None)
     data2b = pd.read_csv("data/50agents_ne_k15_v15_score.csv", header=None)
     data3b = pd.read_csv("data/50agents_ne_k20_v15_score.csv", header=None)
     data4b = pd.read_csv("data/50agents_ne_k35_v15_score.csv", header=None)
 
+    # Calculate global average density
     areas = np.logspace(0.6, 2.65, num=125) ** 2
     rhos = 50 / areas
 
@@ -121,43 +133,47 @@ if fig2:
     fig, axs = plt.subplots(2, 2, figsize=(9, 9))
     plt.subplots_adjust(left=0.07, bottom=0.05, right=0.93, top=0.95)
 
+    # Plot for k=5
     axs[0, 0].plot(rhos, data1b, color='tab:red')
     axs[0, 0].set_xscale('log')
     axs[0, 0].set_title('$k=5$')
     axs[0, 0].set_ylabel('Tracking Performance ($\Xi$)', color='tab:red')
 
-    diff1 = data1[0] - rhos
+    diff1 = data1[0] - rhos     # Calculate local density difference
     ax1 = axs[0, 0].twinx()
     ax1.plot(rhos, diff1, color='tab:blue')
     ax1.set_yscale('log')
 
+    # Plot for k=15
     axs[0, 1].plot(rhos, data2b, color='tab:red')
     axs[0, 1].set_xscale('log')
     axs[0, 1].set_title('$k=15$')
 
-    diff2 = data2[0] - rhos
+    diff2 = data2[0] - rhos     # Calculate local density difference
     ax2 = axs[0, 1].twinx()
     ax2.plot(rhos, diff2, color='tab:blue')
     ax2.set_ylabel('Local Density Difference ($\Delta\\rho$)', color='tab:blue')
     ax2.set_yscale('log')
 
+    # Plot for k=20
     axs[1, 0].plot(rhos, data3b, color='tab:red')
     axs[1, 0].set_xscale('log')
     axs[1, 0].set_title('$k=20$')
     axs[1, 0].set_xlabel('Swarm Density $\\rho$')
     axs[1, 0].set_ylabel('Tracking Performance ($\Xi$)', color='tab:red')
 
-    diff3 = data3[0] - rhos
+    diff3 = data3[0] - rhos     # Calculate local density difference
     ax3 = axs[1, 0].twinx()
     ax3.plot(rhos, diff3, color='tab:blue')
     ax3.set_yscale('log')
 
+    # Plot for k=35
     axs[1, 1].plot(rhos, data4b, label='Tracking Performance', color='tab:red')
     axs[1, 1].set_xscale('log')
     axs[1, 1].set_xlabel('Swarm Density ($\\rho$)')
     axs[1, 1].set_title('$k=35$')
 
-    diff4 = data4[0] - rhos
+    diff4 = data4[0] - rhos     # Calculate local density difference
     ax4 = axs[1, 1].twinx()
     ax4.plot(rhos, diff4, color='tab:blue')
     ax4.set_ylabel('Local Density Difference ($\Delta\\rho$)', color='tab:blue')
@@ -166,25 +182,29 @@ if fig2:
     plt.show()
 
 if fig3:
+
+    # Load engagement ratio data
     data1a = pd.read_csv("data/50agents_ne_k5_v15_engagement.csv", header=None)
     data2a = pd.read_csv("data/50agents_ne_k15_v15_engagement.csv", header=None)
     data3a = pd.read_csv("data/50agents_ne_k20_v15_engagement.csv", header=None)
     data4a = pd.read_csv("data/50agents_ne_k35_v15_engagement.csv", header=None)
 
+    # Load tracking performance data
     data1b = pd.read_csv("data/50agents_ne_k5_v15_score.csv", header=None)
     data2b = pd.read_csv("data/50agents_ne_k15_v15_score.csv", header=None)
     data3b = pd.read_csv("data/50agents_ne_k20_v15_score.csv", header=None)
     data4b = pd.read_csv("data/50agents_ne_k35_v15_score.csv", header=None)
 
     areas = np.logspace(0.6, 2.65, num=125) ** 2
-    rhos = 50 / areas
+    rhos = 50 / areas   # Calculate densities
 
     plt.rcParams.update({'font.size': 13})
     fig, axs = plt.subplots(2, 2, figsize=(9, 9))
     plt.subplots_adjust(left=0.07, bottom=0.05, right=0.93, top=0.95)
     props = dict(boxstyle='round', color='white')
 
-    exp1 = 1 - data1a[0]
+    # Plot for k=5
+    exp1 = 1 - data1a[0]    # Convert from engagement ratio to exploration ratio
     axs[0, 0].plot(rhos, exp1, color='tab:red', label='Exploration Ratio ($\Theta$)')
     axs[0, 0].plot(rhos, data1b, color='tab:blue', label='Tracking Performance ($\Xi$)')
     axs[0, 0].set_xscale('log')
@@ -198,7 +218,8 @@ if fig3:
     axs[0, 0].text(0.6, 1.05, 'High', backgroundcolor='white', bbox=props, fontsize=17.5)
     axs[0, 0].legend(loc='lower right', prop={'size': 8.5}).get_frame().set_boxstyle('Round', pad=0.2, rounding_size=1)
 
-    exp2 = 1 - data2a[0]
+    # Plot for k=15
+    exp2 = 1 - data2a[0]    # Convert from engagement ratio to exploration ratio
     axs[0, 1].plot(rhos, exp2, color='tab:red')
     axs[0, 1].plot(rhos, data2b, color='tab:blue')
     axs[0, 1].set_xscale('log')
@@ -211,7 +232,8 @@ if fig3:
     axs[0, 1].text(0.006, 1.05, 'Transition', backgroundcolor='white', bbox=props, fontsize=17.5)
     axs[0, 1].text(0.6, 1.05, 'High', backgroundcolor='white', bbox=props, fontsize=17.5)
 
-    exp3 = 1 - data3a[0]
+    # Plot for k=20
+    exp3 = 1 - data3a[0]    # Convert from engagement ratio to exploration ratio
     axs[1, 0].plot(rhos, exp3, color='tab:red')
     axs[1, 0].plot(rhos, data3b, color='tab:blue')
     axs[1, 0].set_xscale('log')
@@ -225,7 +247,8 @@ if fig3:
     axs[1, 0].text(0.008, 1.05, 'Transition', backgroundcolor='white', bbox=props, fontsize=17.5)
     axs[1, 0].text(0.7, 1.05, 'High', backgroundcolor='white', bbox=props, fontsize=17.5)
 
-    exp4 = 1 - data4a[0]
+    # Plot for k=35
+    exp4 = 1 - data4a[0]    # Convert from engagement ratio to exploration ratio
     axs[1, 1].plot(rhos, exp4, label='Exploration Ratio ($\Theta$)', color='tab:red')
     axs[1, 1].plot(rhos, data4b, label='Tracking Performance ($\Xi$)', color='tab:blue')
     axs[1, 1].set_xscale('log')
@@ -242,6 +265,8 @@ if fig3:
     plt.show()
 
 if fig4a:
+
+    # Load tracking performance data
     data1 = pd.read_csv("data/50agents_ne_k5_v15_score_e10.csv", header=None)
     data2 = pd.read_csv("data/50agents_ne_k10_v15_score_e10.csv", header=None)
     data3 = pd.read_csv("data/50agents_ne_k20_v15_score_e10.csv", header=None)
@@ -249,7 +274,7 @@ if fig4a:
     data5 = pd.read_csv("data/50agents_ne_k40_v15_score_e10.csv", header=None)
 
     areas = np.logspace(0.6, 2.65, num=125) ** 2
-    rhos = 50 / areas
+    rhos = 50 / areas   # Calculate densities
 
     plt.rcParams.update({'font.size': 22, 'lines.linewidth': 3})
 
@@ -272,6 +297,8 @@ if fig4a:
     plt.show()
 
 if fig4b:
+
+    # Load engagement ratio data
     data1a = pd.read_csv("data/50agents_ne_k5_v15_engagement_e10.csv", header=None)
     data2a = pd.read_csv("data/50agents_ne_k10_v15_engagement_e10.csv", header=None)
     data3a = pd.read_csv("data/50agents_ne_k20_v15_engagement_e10.csv", header=None)
@@ -281,6 +308,7 @@ if fig4b:
     areas = np.logspace(0.6, 2.65, num=125) ** 2
     rhos = 50 / areas
 
+    # Convert to exploration ratio
     data1a = 1 - data1a
     data2a = 1 - data2a
     data3a = 1 - data3a
@@ -307,10 +335,13 @@ if fig4b:
     plt.show()
 
 if fig4c:
+
+    # Load tracking performance data
     data1 = pd.read_csv("data/50agents_ne25_v15_nm_score.csv")
     data2 = pd.read_csv("data/50agents_ne30_v15_nm_score.csv")
     data3 = pd.read_csv("data/50agents_ne35_v15_nm_score.csv")
 
+    # Load engagement ratio data
     data1e = pd.read_csv("data/50agents_ne25_v15_nm_engagement.csv")
     data2e = pd.read_csv("data/50agents_ne30_v15_nm_engagement.csv")
     data3e = pd.read_csv("data/50agents_ne35_v15_nm_engagement.csv")
@@ -318,6 +349,7 @@ if fig4c:
     alpha = [(k / 40 + 0.5) / 1.5 for k in np.linspace(2, 40, 39)]
     alpha = alpha[::-1]
 
+    # Convert to exploration ratio
     data1e = 1 - data1e
     data2e = 1 - data2e
     data3e = 1 - data3e
@@ -326,6 +358,7 @@ if fig4c:
     plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)
     plt.rcParams.update({'font.size': 18, 'lines.markersize' : 10})
 
+    # Set higher k values to be darker and lower k values to be lighter
     def scatter(ax, x, y, color, alpha_arr, **kwarg):
         r, g, b = colors.to_rgb(color)
         color = [(r, g, b, alpha) for alpha in alpha_arr]
@@ -339,6 +372,7 @@ if fig4c:
     scatter(ax, data2e.iloc[::-1], data2.iloc[::-1], 'darkblue', alpha, label='$\\rho = 0.056$')
     scatter(ax, data3e.iloc[::-1], data3.iloc[::-1], 'darkgreen', alpha, label='$\\rho = 0.041$')
 
+    # Line separating exploration and exploitation limited phases
     plt.axvline(x=0.675, linestyle='dotted', color='black')
     plt.arrow(0.6, 1.2, -.15, 0, head_width=0.02, facecolor='k')
     plt.text(0.385, 1.13, 'Exploration-Limited')
@@ -369,7 +403,7 @@ if fig4c:
         arrow.axes.add_patch(pp2)
         arrow.remove()
 
-
+    # Draw arrows
     split_arrow(curved_arrow, color_tail="black", color_head="black", ls_tail="--", lw_tail=3)
     ax.text(0.685, 0.56, '$k \\nearrow $', fontsize=15)
 
@@ -390,20 +424,25 @@ if fig4c:
 
 
 if fig5:
+
+    # Load k=10 data
     data1 = pd.read_csv("data/1T_k10_50agents_v15_engagement.csv", header=None)
     data2 = pd.read_csv("data/1T_k10_40agents_v15_engagement.csv", header=None)
     data3 = pd.read_csv("data/1T_k10_30agents_v15_engagement.csv", header=None)
     data4 = pd.read_csv("data/1T_k10_20agents_v15_engagement.csv", header=None)
 
+    # Load k=15 data
     data1a = pd.read_csv("data/1T_k15_50agents_v15_engagement.csv", header=None)
     data2a = pd.read_csv("data/1T_k15_40agents_v15_engagement.csv", header=None)
     data3a = pd.read_csv("data/1T_k15_30agents_v15_engagement.csv", header=None)
     data4a = pd.read_csv("data/1T_k15_20agents_v15_engagement.csv", header=None)
 
+    # Load k=25 data
     data1b = pd.read_csv("data/1T_k25_50agents_v15_engagement.csv", header=None)
     data2b = pd.read_csv("data/1T_k25_40agents_v15_engagement.csv", header=None)
     data3b = pd.read_csv("data/1T_k25_30agents_v15_engagement.csv", header=None)
 
+    # Convert engagement ratios to exploration ratios
     data1 = 1 - data1
     data2 = 1 - data2
     data3 = 1 - data3
@@ -422,12 +461,14 @@ if fig5:
     fig, axs = plt.subplots(1, 3, figsize=(15, 6))
     plt.subplots_adjust(left=0.05, bottom=0.12, right=0.97, top=0.95)
 
+    # Calculate densities for different swarm sizes
     areas = np.logspace(0.6, 2.65, num=125) ** 2
-    rhos1 = 50 / areas
-    rhos2 = 40 / areas
-    rhos3 = 30 / areas
-    rhos4 = 20 / areas
+    rhos1 = 50 / areas  # 50 Agent swarm
+    rhos2 = 40 / areas  # 40 Agent swarm
+    rhos3 = 30 / areas  # 30 Agent swarm
+    rhos4 = 20 / areas  # 20 Agent swarm
 
+    # Plot for k=10
     axs[0].plot(rhos1, data1, color='tab:red', label='$N=50$')
     axs[0].plot(rhos2, data2, color='tab:blue', label='$N=40$')
     axs[0].plot(rhos3, data3, color='tab:green', label='$N=30$')
@@ -439,6 +480,7 @@ if fig5:
     axs[0].set_title('$k=10$', fontsize=18)
     axs[0].legend(loc='center left')
 
+    # Plot for k=15
     axs[1].plot(rhos1, data1a, color='tab:red', label='$N=50$')
     axs[1].plot(rhos2, data2a, color='tab:blue', label='$N=40$')
     axs[1].plot(rhos3, data3a, color='tab:green', label='$N=30$')
@@ -448,6 +490,7 @@ if fig5:
     axs[1].set_xlabel('Swarm Density ($\\rho$)')
     axs[1].set_title('$k=15$', fontsize=18)
 
+    # Plot for k=25
     axs[2].plot(rhos1, data1b, color='tab:red', label='$N=50$')
     axs[2].plot(rhos2, data2b, color='tab:blue', label='$N=40$')
     axs[2].plot(rhos3, data3b, color='tab:green', label='$N=30$')
@@ -459,21 +502,26 @@ if fig5:
     plt.show()
 
 if fig6:
+
+    # Load engagement ratio data
     data1 = pd.read_csv("data/50agents_ne33r5_v15_engagement.csv", header=None)
     data2 = pd.read_csv("data/40agents_ne30_v15_engagement.csv", header=None)
     data3 = pd.read_csv("data/30agents_ne26_v15_engagement.csv", header=None)
     data4 = pd.read_csv("data/20agents_ne21r2_v15_engagement.csv", header=None)
 
+    # Convert to exploration ratio
     data1 = 1 - data1
     data2 = 1 - data2
     data3 = 1 - data3
     data4 = 1 - data4
 
+    # List of all k values
     k20 = np.linspace(1, 19, 19)
     k30 = np.linspace(1, 29, 29)
     k40 = np.linspace(1, 39, 39)
     ks_o = np.linspace(1, 49, 49)
 
+    # List of all k/N values
     k20a = np.linspace(1/20, 19/20, 19)
     k30a = np.linspace(1/30, 29/30, 29)
     k40a = np.linspace(1/40, 39/40, 39)
@@ -495,16 +543,20 @@ if fig6:
     plt.show()
 
 if fig7:
+
+    # Load tracking performance data
     data1 = pd.read_csv("data/50agents_ne33r5_v15_score.csv", header=None)
     data2 = pd.read_csv("data/40agents_ne30_v15_score.csv", header=None)
     data3 = pd.read_csv("data/30agents_ne26_v15_score.csv", header=None)
     data4 = pd.read_csv("data/20agents_ne21r2_v15_score.csv", header=None)
 
+    # List of all k values
     k20 = np.linspace(1, 19, 19)
     k30 = np.linspace(1, 29, 29)
     k40 = np.linspace(1, 39, 39)
     ks_o = np.linspace(1, 49, 49)
 
+    # List of all k/N values
     k20a = np.linspace(1/20, 19/20, 19)
     k30a = np.linspace(1/30, 29/30, 29)
     k40a = np.linspace(1/40, 39/40, 39)
@@ -514,11 +566,13 @@ if fig7:
     fig, axs = plt.subplots(1, 2, figsize=(11, 5))
     plt.subplots_adjust(left=0.075, right=0.95, top=0.9, bottom=0.1)
 
+    # Plot against absolute k values
     axs[0].plot(ks_o, data1, label='50 Agents', color='tab:red')
     axs[0].plot(k40, data2, label='40 Agents', color='tab:blue')
     axs[0].plot(k30, data3, label='30 Agents', color='tab:green')
     axs[0].plot(k20, data4, label='20 Agents', color='tab:purple')
 
+    # Plot against k/N
     axs[1].plot(ks_oa, data1, label='50 Agents', color='tab:red')
     axs[1].plot(k40a, data2, label='40 Agents', color='tab:blue')
     axs[1].plot(k30a, data3, label='30 Agents', color='tab:green')
@@ -541,16 +595,20 @@ if fig7:
     plt.show()
 
 if fig8:
+
+    # Load low density tracking performance data
     data1 = pd.read_csv("data/50agents_ne50_v15_long_score.csv", header=None)
     data2 = pd.read_csv("data/40agents_ne44r7_v15_long_score.csv", header=None)
     data3 = pd.read_csv("data/30agents_ne38r7_v15_long_score.csv", header=None)
     data4 = pd.read_csv("data/20agents_ne31r6_v15_long_score1.csv", header=None)
 
+    # List of all k values
     k20 = np.linspace(1, 19, 19)
     k30 = np.linspace(1, 29, 29)
     k40 = np.linspace(1, 39, 39)
     ks_o = np.linspace(1, 49, 49)
 
+    # List of all k/N values
     k20a = np.linspace(1/20, 19/20, 19)
     k30a = np.linspace(1/30, 29/30, 29)
     k40a = np.linspace(1/40, 39/40, 39)
@@ -560,11 +618,13 @@ if fig8:
     fig, axs = plt.subplots(1, 2, figsize=(11, 5))
     plt.subplots_adjust(left=0.075, right=0.95, top=0.9, bottom=0.1)
 
+    # Plot against absolute k values
     axs[0].plot(ks_o, data1, label='50 Agents', color='tab:red')
     axs[0].plot(k40, data2, label='40 Agents', color='tab:blue')
     axs[0].plot(k30, data3, label='30 Agents', color='tab:green')
     axs[0].plot(k20, data4, label='20 Agents', color='tab:purple')
 
+    # Plot against k/N
     axs[1].plot(ks_oa, data1, label='50 Agents', color='tab:red')
     axs[1].plot(k40a, data2, label='40 Agents', color='tab:blue')
     axs[1].plot(k30a, data3, label='30 Agents', color='tab:green')
@@ -578,12 +638,16 @@ if fig8:
     plt.show()
 
 if fig9:
+
+    # Load adaptive strategy tracking performance data
     data1 = pd.read_csv("data/1T_k10_verification_v15_score.csv", header=None)
+
+    # Load non-adaptive strategy tracking performance
     data2 = pd.read_csv("data/constant_repulsion_k10_score.csv", header=None)
 
     areas = np.logspace(0.6, 2.65, num=125) ** 2
     areas1 = np.logspace(0.6, 2.35, num=125) ** 2
-    rhos = 50 / areas
+    rhos = 50 / areas   # Calculate densities
     plt.rcParams.update({'font.size': 22, 'lines.linewidth': 3})
 
     fig, ax = plt.subplots(figsize=(8.5, 8))
@@ -599,16 +663,19 @@ if fig9:
     plt.show()
 
 if figa1b:
+
+    # Load local density data using different number of neighbours
     data1 = pd.read_csv("data/50agents_ne_k20_v15_density_e10_r3.csv", header=None)
     data2 = pd.read_csv("data/50agents_ne_k20_v15_density_e10_r4.csv", header=None)
     data3 = pd.read_csv("data/50agents_ne_k20_v15_density_e10_r6.csv", header=None)
     data4 = pd.read_csv("data/50agents_ne_k20_v15_density_e10_r10.csv", header=None)
     data5 = pd.read_csv("data/50agents_ne_k20_v15_density_e10_r16.csv", header=None)
 
+    # Calculate global average density
     areas = np.logspace(0.6, 2.65, num=125) ** 2
     rhos = 50 / areas
-    plt.rcParams.update({'font.size': 22, 'lines.linewidth': 3})
 
+    plt.rcParams.update({'font.size': 22, 'lines.linewidth': 3})
     fig, ax = plt.subplots(figsize=(8, 8))
 
     ax.plot(rhos, rhos, color='black', linestyle='dashed')
